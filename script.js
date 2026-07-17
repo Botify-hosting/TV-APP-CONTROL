@@ -1,152 +1,587 @@
-// ============================
-// TVControl Pro
-// script.js
-// ============================
+/* ==========================================
+   TVControl Pro
+   script.js
+   Frontend Controller
+========================================== */
 
-console.log("TVControl Pro gestart!");
 
-// Status
-let tvOnline = true;
-let volume = 68;
-let currentApp = "YouTube";
+// ==========================
+// Basis instellingen
+// ==========================
 
-// Dashboard elementen
-const statusElement = document.querySelector(".cards .card:nth-child(1) h2");
-const volumeElement = document.querySelector(".cards .card:nth-child(2) h2");
-const progressBar = document.querySelector(".bar");
-const appElement = document.querySelector(".cards .card:nth-child(3) h2");
+const TV = {
 
-// Remote knoppen
-const buttons = document.querySelectorAll(".remote-grid button");
+    connected: false,
 
-buttons.forEach(button => {
+    ip: null,
 
-    button.addEventListener("click", () => {
+    volume: null,
 
-        const action = button.innerText;
+    app: null,
 
-        console.log("Knop:", action);
+    source: null,
 
-        toast(action + " verzonden");
+    ambilight: false
 
-    });
+};
 
-});
 
-// Apps
 
-document.querySelectorAll(".app").forEach(app => {
+// ==========================
+// Meldingen
+// ==========================
 
-    app.addEventListener("click", () => {
+function showNotification(message){
 
-        currentApp = app.innerText.trim();
+    const notification =
+    document.getElementById("notification");
 
-        appElement.innerText = currentApp;
 
-        toast(currentApp + " geopend");
+    if(!notification) return;
 
-    });
 
-});
+    notification.innerText = message;
 
-// Macro's
 
-document.querySelectorAll(".macro").forEach(card => {
+    notification.classList.add("show");
 
-    card.addEventListener("click", () => {
-
-        toast(card.innerText + " gestart");
-
-    });
-
-});
-
-// TV Status wisselen
-
-function toggleTV(){
-
-    tvOnline = !tvOnline;
-
-    statusElement.innerHTML = tvOnline ? "🟢 Online" : "🔴 Offline";
-
-}
-
-setInterval(toggleTV,15000);
-
-// Volume demo
-
-setInterval(()=>{
-
-    if(volume>=100){
-
-        volume=20;
-
-    }else{
-
-        volume++;
-
-    }
-
-    volumeElement.innerText=volume+"%";
-
-    progressBar.style.width=volume+"%";
-
-},1200);
-
-// Toast
-
-function toast(text){
-
-    const div=document.createElement("div");
-
-    div.className="toast";
-
-    div.innerText=text;
-
-    document.body.appendChild(div);
 
     setTimeout(()=>{
 
-        div.classList.add("show");
-
-    },50);
-
-    setTimeout(()=>{
-
-        div.classList.remove("show");
-
-        setTimeout(()=>{
-
-            div.remove();
-
-        },300);
+        notification.classList.remove("show");
 
     },2500);
 
 }
 
-// Sidebar
 
-document.querySelectorAll(".sidebar li").forEach(item=>{
 
-    item.addEventListener("click",()=>{
+// ==========================
+// Remote knoppen
+// ==========================
 
-        document.querySelectorAll(".sidebar li").forEach(li=>{
 
-            li.classList.remove("active");
+document.querySelectorAll(".remote-btn")
+.forEach(button=>{
 
-        });
 
-        item.classList.add("active");
+    button.addEventListener("click",()=>{
+
+
+        const action =
+        button.dataset.action;
+
+
+        console.log(
+            "TV actie:",
+            action
+        );
+
+
+        sendTVCommand(action);
+
 
     });
 
+
 });
 
-// Welkomstbericht
 
-setTimeout(()=>{
 
-    toast("Welkom bij TVControl Pro 👋");
 
-},700);
+// ==========================
+// Apps
+// ==========================
+
+
+document.querySelectorAll(".app-card")
+.forEach(app=>{
+
+
+    app.addEventListener("click",()=>{
+
+
+        const appName =
+        app.dataset.app;
+
+
+        console.log(
+            "App starten:",
+            appName
+        );
+
+
+        sendTVCommand(
+            "openApp",
+            appName
+        );
+
+
+    });
+
+
+});
+
+
+
+
+
+// ==========================
+// Ambilight
+// ==========================
+
+
+const ambiToggle =
+document.getElementById("ambiToggle");
+
+
+if(ambiToggle){
+
+
+ambiToggle.addEventListener(
+"click",
+()=>{
+
+
+    TV.ambilight =
+    !TV.ambilight;
+
+
+    document.getElementById(
+        "ambiStatus"
+    ).innerText =
+
+    TV.ambilight
+    ?
+    "Aan"
+    :
+    "Uit";
+
+
+
+    sendTVCommand(
+        "ambilight",
+        TV.ambilight
+    );
+
+
+});
+
+
+}
+
+
+
+
+// Helderheid
+
+const brightness =
+document.getElementById(
+"ambiBrightness"
+);
+
+
+if(brightness){
+
+
+brightness.addEventListener(
+"input",
+()=>{
+
+
+    document.getElementById(
+        "brightnessValue"
+    ).innerText =
+
+    brightness.value + "%";
+
+
+
+    sendTVCommand(
+        "ambilightBrightness",
+        brightness.value
+    );
+
+
+});
+
+
+}
+
+
+
+
+
+// ==========================
+// Ambilight kleuren
+// ==========================
+
+
+document.querySelectorAll(
+".color-picker button"
+)
+.forEach(color=>{
+
+
+color.addEventListener(
+"click",
+()=>{
+
+
+    const value =
+    color.dataset.color;
+
+
+    sendTVCommand(
+        "ambilightColor",
+        value
+    );
+
+
+});
+
+
+});
+
+
+
+
+
+// ==========================
+// Macro's
+// ==========================
+
+
+document.querySelectorAll(
+".macro-card"
+)
+.forEach(macro=>{
+
+
+macro.addEventListener(
+"click",
+()=>{
+
+
+    const action =
+    macro.dataset.macro;
+
+
+    sendTVCommand(
+        "macro",
+        action
+    );
+
+
+});
+
+
+});
+
+
+
+
+
+
+// ==========================
+// Favorieten
+// ==========================
+
+
+document.querySelectorAll(
+".favorite-card"
+)
+.forEach(card=>{
+
+
+card.addEventListener(
+"click",
+()=>{
+
+
+showNotification(
+card.innerText +
+" gestart"
+);
+
+
+});
+
+
+});
+
+
+
+
+
+
+// ==========================
+// Voice
+// ==========================
+
+
+const voiceButton =
+document.getElementById(
+"voiceButton"
+);
+
+
+if(voiceButton){
+
+
+voiceButton.addEventListener(
+"click",
+()=>{
+
+
+showNotification(
+"Luisteren..."
+);
+
+
+startVoice();
+
+
+});
+
+
+}
+
+
+
+
+function startVoice(){
+
+
+if(!("webkitSpeechRecognition" in window)){
+
+
+showNotification(
+"Spraak niet ondersteund"
+);
+
+
+return;
+
+
+}
+
+
+
+const recognition =
+new webkitSpeechRecognition();
+
+
+
+recognition.lang =
+"nl-NL";
+
+
+
+recognition.start();
+
+
+
+recognition.onresult =
+function(event){
+
+
+const text =
+event.results[0][0].transcript;
+
+
+
+document.getElementById(
+"voiceText"
+).innerText =
+text;
+
+
+
+sendTVCommand(
+"voice",
+text
+);
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+// ==========================
+// Toetsenbord
+// ==========================
+
+
+const keyboard =
+document.getElementById(
+"sendKeyboard"
+);
+
+
+
+if(keyboard){
+
+
+keyboard.addEventListener(
+"click",
+()=>{
+
+
+const text =
+document.getElementById(
+"tvKeyboard"
+).value;
+
+
+
+sendTVCommand(
+"text",
+text
+);
+
+
+
+});
+
+
+}
+
+
+
+
+
+// ==========================
+// Verbinden knop
+// ==========================
+
+
+const connect =
+document.getElementById(
+"connectTV"
+);
+
+
+
+if(connect){
+
+
+connect.addEventListener(
+"click",
+()=>{
+
+
+showNotification(
+"Verbinding zoeken..."
+);
+
+
+
+connectTV();
+
+
+});
+
+
+}
+
+
+
+
+
+// ==========================
+// TV verbinding
+// ==========================
+
+
+async function connectTV(){
+
+
+/*
+
+Later:
+
+fetch naar server.js
+
+server zoekt Philips TV
+
+*/
+
+
+console.log(
+"TV verbinding starten..."
+);
+
+
+
+showNotification(
+"Backend nog niet gekoppeld"
+);
+
+
+}
+
+
+
+
+
+// ==========================
+// Commando versturen
+// ==========================
+
+
+async function sendTVCommand(
+command,
+value=null
+){
+
+
+
+console.log(
+"Command:",
+command,
+value
+);
+
+
+
+/*
+
+Later vervangen door:
+
+fetch(
+"http://localhost:3000/tv",
+{
+method:"POST",
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify({
+command,
+value
+})
+
+})
+
+*/
+
+
+showNotification(
+command
++
+" verzonden"
+);
+
+
+
+}
