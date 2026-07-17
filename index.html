@@ -2,79 +2,130 @@
 <html lang="nl">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>TVControl Pro</title>
 
     <link rel="stylesheet" href="style.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <script src="https://kit.fontawesome.com/6b8b9b8f67.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
 </head>
 
 <body>
 
+<div class="background"></div>
+
 <div class="sidebar">
 
 <div class="logo">
-📺 TVControl
+
+<i class="fa-solid fa-tv"></i>
+
+<h2>TVControl</h2>
+
 </div>
+
+<nav>
 
 <ul>
 
 <li class="active">
-<i class="fas fa-home"></i>
+
+<i class="fa-solid fa-house"></i>
+
 <span>Dashboard</span>
+
 </li>
 
 <li>
-<i class="fas fa-gamepad"></i>
+
+<i class="fa-solid fa-gamepad"></i>
+
 <span>Remote</span>
+
 </li>
 
 <li>
-<i class="fas fa-th-large"></i>
+
+<i class="fa-solid fa-mobile-screen-button"></i>
+
 <span>Apps</span>
+
 </li>
 
 <li>
-<i class="fas fa-microphone"></i>
+
+<i class="fa-solid fa-lightbulb"></i>
+
+<span>Ambilight</span>
+
+</li>
+
+<li>
+
+<i class="fa-solid fa-microphone"></i>
+
 <span>Voice</span>
+
 </li>
 
 <li>
-<i class="fas fa-bolt"></i>
-<span>Macro's</span>
-</li>
 
-<li>
-<i class="fas fa-heart"></i>
+<i class="fa-solid fa-star"></i>
+
 <span>Favorieten</span>
+
 </li>
 
 <li>
-<i class="fas fa-cog"></i>
+
+<i class="fa-solid fa-bolt"></i>
+
+<span>Macro's</span>
+
+</li>
+
+<li>
+
+<i class="fa-solid fa-gear"></i>
+
 <span>Instellingen</span>
+
 </li>
 
 </ul>
 
+</nav>
+
 </div>
 
-<div class="main">
+<div class="content">
 
 <header>
 
 <div>
 
-<h1>Dashboard</h1>
+<h1>Philips OLED Dashboard</h1>
 
-<p>Welkom terug 👋</p>
+<p>Verbonden met Philips 65OLED855/12</p>
 
 </div>
 
-<div class="profile">
+<div class="header-right">
+
+<div class="connection online">
+
+<span></span>
+
+Online
+
+</div>
 
 <img src="https://i.pravatar.cc/100" alt="">
 
@@ -82,13 +133,15 @@
 
 </header>
 
-<section class="cards">
+<section class="dashboard">
 
 <div class="card">
 
 <h3>TV Status</h3>
 
-<h2>🟢 Online</h2>
+<h2 id="tvStatus">Online</h2>
+
+<p>Netwerkverbinding actief</p>
 
 </div>
 
@@ -96,10 +149,12 @@
 
 <h3>Volume</h3>
 
-<h2>68%</h2>
+<h2 id="volumeValue">--%</h2>
 
 <div class="progress">
-<div class="bar" style="width:68%"></div>
+
+<div id="volumeBar"></div>
+
 </div>
 
 </div>
@@ -108,125 +163,900 @@
 
 <h3>Huidige App</h3>
 
-<h2>YouTube</h2>
+<h2 id="currentApp">
+
+Niet beschikbaar
+
+</h2>
 
 </div>
 
 <div class="card">
 
-<h3>WiFi</h3>
+<h3>Bron</h3>
 
-<h2>Verbonden</h2>
+<h2 id="currentSource">
+
+HDMI 1
+
+</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Ambilight</h3>
+
+<h2 id="ambilightStatus">
+
+Uit
+
+</h2>
+
+</div>
+
+<div class="card">
+
+<h3>IP Adres</h3>
+
+<h2 id="ipAddress">
+
+Nog niet verbonden
+
+</h2>
 
 </div>
 
 </section>
 
-<section class="remote">
+<!-- =========================
+     REMOTE CONTROL
+========================= -->
+
+<section class="remote-panel">
+
+<div class="section-title">
 
 <h2>Afstandsbediening</h2>
 
+<p>Philips TV Control</p>
+
+</div>
+
+
+<div class="remote">
+
+<button class="remote-btn power" data-action="power">
+<i class="fa-solid fa-power-off"></i>
+</button>
+
+
 <div class="remote-grid">
 
-<button>▲</button>
 
-<div></div>
+<button class="remote-btn" data-action="up">
+<i class="fa-solid fa-chevron-up"></i>
+</button>
 
-<button>Home</button>
 
-<button>◀</button>
+<button class="remote-btn" data-action="home">
+<i class="fa-solid fa-house"></i>
+</button>
 
-<button>OK</button>
 
-<button>▶</button>
+<button class="remote-btn" data-action="back">
+<i class="fa-solid fa-arrow-left"></i>
+</button>
 
-<button>Back</button>
 
-<div></div>
 
-<button>▼</button>
+<button class="remote-btn" data-action="left">
+<i class="fa-solid fa-chevron-left"></i>
+</button>
+
+
+<button class="remote-btn ok" data-action="ok">
+OK
+</button>
+
+
+<button class="remote-btn" data-action="right">
+<i class="fa-solid fa-chevron-right"></i>
+</button>
+
+
+
+<button class="remote-btn" data-action="down">
+<i class="fa-solid fa-chevron-down"></i>
+</button>
+
+
+<button class="remote-btn" data-action="menu">
+<i class="fa-solid fa-bars"></i>
+</button>
+
+
+<button class="remote-btn" data-action="apps">
+<i class="fa-solid fa-grip"></i>
+</button>
+
+
+</div>
+
+
+<div class="media-buttons">
+
+
+<button data-action="volume-down">
+
+<i class="fa-solid fa-volume-low"></i>
+
+Volume -
+
+</button>
+
+
+<button data-action="mute">
+
+<i class="fa-solid fa-volume-xmark"></i>
+
+Mute
+
+</button>
+
+
+<button data-action="volume-up">
+
+<i class="fa-solid fa-volume-high"></i>
+
+Volume +
+
+</button>
+
+
+<button data-action="play">
+
+<i class="fa-solid fa-play"></i>
+
+Play
+
+</button>
+
+
+</div>
 
 </div>
 
 </section>
 
-<section class="apps">
 
-<h2>Snelle Apps</h2>
 
-<div class="app-grid">
+<!-- =========================
+     APPS
+========================= -->
 
-<div class="app">
-<i class="fab fa-youtube"></i>
-<p>YouTube</p>
-</div>
 
-<div class="app">
-<i class="fab fa-spotify"></i>
-<p>Spotify</p>
-</div>
+<section class="apps-panel">
 
-<div class="app">
-<i class="fas fa-film"></i>
-<p>Netflix</p>
-</div>
 
-<div class="app">
-<i class="fas fa-tv"></i>
-<p>Disney+</p>
-</div>
+<div class="section-title">
 
-<div class="app">
-<i class="fas fa-play"></i>
-<p>Plex</p>
-</div>
+<h2>Apps</h2>
 
-<div class="app">
-<i class="fas fa-gamepad"></i>
-<p>Steam Link</p>
-</div>
+<p>Geïnstalleerde applicaties</p>
 
 </div>
+
+
+
+<div class="apps-grid">
+
+
+<div class="app-card" data-app="YouTube">
+
+<i class="fa-brands fa-youtube"></i>
+
+<h3>YouTube</h3>
+
+</div>
+
+
+
+<div class="app-card" data-app="Netflix">
+
+<i class="fa-solid fa-film"></i>
+
+<h3>Netflix</h3>
+
+</div>
+
+
+
+<div class="app-card" data-app="Disney+">
+
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+
+<h3>Disney+</h3>
+
+</div>
+
+
+
+<div class="app-card" data-app="Spotify">
+
+<i class="fa-brands fa-spotify"></i>
+
+<h3>Spotify</h3>
+
+</div>
+
+
+
+<div class="app-card" data-app="Plex">
+
+<i class="fa-solid fa-play"></i>
+
+<h3>Plex</h3>
+
+</div>
+
+
+
+<div class="app-card" data-app="Kodi">
+
+<i class="fa-solid fa-photo-film"></i>
+
+<h3>Kodi</h3>
+
+</div>
+
+
+</div>
+
 
 </section>
 
-<section class="macros">
+<!-- =========================
+     AMBILIGHT CONTROL
+========================= -->
 
-<h2>Macro's</h2>
+<section class="ambilight-panel">
 
-<div class="macro-grid">
+<div class="section-title">
 
-<div class="macro">
+<h2>
+<i class="fa-solid fa-lightbulb"></i>
+Ambilight
+</h2>
 
-🎬 Filmavond
+<p>
+Bediening voor Philips Ambilight
+</p>
 
 </div>
 
-<div class="macro">
 
-🎮 Gaming
+<div class="ambilight-card">
+
+
+<div class="ambi-status">
+
+<div>
+
+<h3>Status</h3>
+
+<p id="ambiStatus">
+Niet verbonden
+</p>
 
 </div>
 
-<div class="macro">
+
+<button class="toggle-btn" id="ambiToggle">
+
+AAN / UIT
+
+</button>
+
+</div>
+
+
+
+<div class="ambi-controls">
+
+
+<div class="control-box">
+
+<h3>Helderheid</h3>
+
+
+<input 
+type="range"
+id="ambiBrightness"
+min="0"
+max="100"
+value="50">
+
+
+<span id="brightnessValue">
+50%
+</span>
+
+
+</div>
+
+
+
+
+<div class="control-box">
+
+
+<h3>Modus</h3>
+
+
+<div class="mode-buttons">
+
+
+<button data-mode="video">
+
+🎬 Video
+
+</button>
+
+
+<button data-mode="game">
+
+🎮 Game
+
+</button>
+
+
+<button data-mode="music">
 
 🎵 Muziek
 
+</button>
+
+
+<button data-mode="relax">
+
+🌙 Relax
+
+</button>
+
+
 </div>
 
-<div class="macro">
-
-🌙 Slaapstand
 
 </div>
 
+
+
+<div class="control-box">
+
+
+<h3>Kleur</h3>
+
+
+<div class="color-picker">
+
+
+<button data-color="#ff0000"></button>
+
+<button data-color="#00ff00"></button>
+
+<button data-color="#0000ff"></button>
+
+<button data-color="#ffffff"></button>
+
+<button data-color="#ff00ff"></button>
+
+
 </div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
 
 </section>
 
+
+
+
+<!-- =========================
+     FAVORITES
+========================= -->
+
+
+<section class="favorites-panel">
+
+
+<div class="section-title">
+
+
+<h2>
+
+<i class="fa-solid fa-star"></i>
+
+Favorieten
+
+</h2>
+
+
+<p>
+Snelle acties
+</p>
+
+
 </div>
 
+
+
+<div class="favorites-grid">
+
+
+<div class="favorite-card">
+
+<i class="fa-solid fa-tv"></i>
+
+<h3>
+TV kijken
+</h3>
+
+</div>
+
+
+
+<div class="favorite-card">
+
+<i class="fa-solid fa-film"></i>
+
+<h3>
+Filmavond
+</h3>
+
+</div>
+
+
+
+<div class="favorite-card">
+
+<i class="fa-solid fa-gamepad"></i>
+
+<h3>
+Gaming
+</h3>
+
+</div>
+
+
+
+<div class="favorite-card">
+
+<i class="fa-solid fa-music"></i>
+
+<h3>
+Muziek
+</h3>
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- =========================
+     MACROS
+========================= -->
+
+
+<section class="macro-panel">
+
+
+<div class="section-title">
+
+
+<h2>
+
+<i class="fa-solid fa-bolt"></i>
+
+Macro's
+
+</h2>
+
+
+<p>
+Meerdere acties tegelijk uitvoeren
+</p>
+
+
+</div>
+
+
+
+<div class="macro-grid">
+
+
+<div class="macro-card"
+data-macro="movie">
+
+
+<h3>
+🎬 Filmavond
+</h3>
+
+
+<p>
+Netflix + Ambilight Video + Volume 20
+</p>
+
+
+</div>
+
+
+
+
+<div class="macro-card"
+data-macro="gaming">
+
+
+<h3>
+🎮 Gaming
+</h3>
+
+
+<p>
+HDMI + Game mode + Ambilight Game
+</p>
+
+
+</div>
+
+
+
+
+<div class="macro-card"
+data-macro="sleep">
+
+
+<h3>
+🌙 Slapen
+</h3>
+
+
+<p>
+TV uit + Ambilight uit
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+<!-- =========================
+     VOICE CONTROL
+========================= -->
+
+<section class="voice-panel">
+
+<div class="section-title">
+
+<h2>
+<i class="fa-solid fa-microphone"></i>
+Voice Control
+</h2>
+
+<p>
+Bedien je TV met spraak
+</p>
+
+</div>
+
+
+<div class="voice-card">
+
+
+<button id="voiceButton">
+
+<i class="fa-solid fa-microphone"></i>
+
+</button>
+
+
+<h3 id="voiceText">
+
+Zeg een opdracht...
+
+</h3>
+
+
+<div class="voice-history">
+
+
+<p>
+Geen recente opdrachten
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- =========================
+     KEYBOARD
+========================= -->
+
+
+<section class="keyboard-panel">
+
+
+<div class="section-title">
+
+<h2>
+
+<i class="fa-solid fa-keyboard"></i>
+
+Toetsenbord
+
+</h2>
+
+
+<p>
+Typ rechtstreeks naar je TV
+
+</p>
+
+
+</div>
+
+
+
+<div class="keyboard-card">
+
+
+<input 
+type="text"
+id="tvKeyboard"
+placeholder="Typ hier...">
+
+
+<button id="sendKeyboard">
+
+Versturen
+
+</button>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- =========================
+     SETTINGS
+========================= -->
+
+
+<section class="settings-panel">
+
+
+<div class="section-title">
+
+
+<h2>
+
+<i class="fa-solid fa-gear"></i>
+
+Instellingen
+
+</h2>
+
+
+<p>
+TVControl configuratie
+
+</p>
+
+
+</div>
+
+
+
+
+<div class="settings-grid">
+
+
+
+<div class="setting-card">
+
+
+<h3>
+
+📺 TV Verbinding
+
+</h3>
+
+
+<p id="connectionStatus">
+
+Nog niet ingesteld
+
+</p>
+
+
+<button id="connectTV">
+
+Verbinden
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="setting-card">
+
+
+<h3>
+
+🌙 Thema
+
+</h3>
+
+
+<button id="themeToggle">
+
+Donkere modus
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="setting-card">
+
+
+<h3>
+
+🔔 Meldingen
+
+</h3>
+
+
+<button id="notificationToggle">
+
+Aan
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="setting-card">
+
+
+<h3>
+
+ℹ️ Info
+
+</h3>
+
+
+<p>
+
+TVControl Pro
+
+<br>
+
+Philips OLED Companion
+
+<br>
+
+Versie 1.0
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- =========================
+     NOTIFICATION
+========================= -->
+
+
+<div id="notification"
+class="notification">
+
+
+TVControl
+
+</div>
+
+
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+
+<footer>
+
+
+<p>
+
+© 2026 TVControl Pro
+
+</p>
+
+
+<p>
+
+Philips OLED855 Companion
+
+</p>
+
+
+</footer>
+
+
+
+
+
 <script src="script.js"></script>
+
 
 </body>
 
