@@ -1,6 +1,12 @@
-/* ==========================
+/* ==========================================
    TVControl Pro
+   Philips OLED Companion
    style.css - Deel 1
+========================================== */
+
+
+/* ==========================
+   RESET
 ========================== */
 
 *{
@@ -9,599 +15,2268 @@
     box-sizing:border-box;
 }
 
-body{
-    font-family:'Poppins',sans-serif;
-    background:#0b1220;
-    color:#fff;
-    display:flex;
-    min-height:100vh;
+
+html{
+    scroll-behavior:smooth;
 }
 
-/* Sidebar */
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:#05070d;
+
+    color:white;
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+}
+
+
+/* ==========================
+   BACKGROUND / AMBILIGHT EFFECT
+========================== */
+
+
+.background{
+
+    position:fixed;
+
+    width:100%;
+
+    height:100%;
+
+    z-index:-2;
+
+    background:
+
+    radial-gradient(
+        circle at top left,
+        rgba(0,120,255,.35),
+        transparent 35%
+    ),
+
+    radial-gradient(
+        circle at bottom right,
+        rgba(255,0,150,.25),
+        transparent 40%
+    ),
+
+    #05070d;
+
+}
+
+
+
+.background::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,.04),
+        transparent
+    );
+
+    animation:shine 8s infinite;
+
+}
+
+
+
+@keyframes shine{
+
+    0%{
+        transform:translateX(-100%);
+    }
+
+
+    50%{
+        transform:translateX(100%);
+    }
+
+
+    100%{
+        transform:translateX(-100%);
+    }
+
+}
+
+
+
+
+
+/* ==========================
+   SIDEBAR
+========================== */
+
 
 .sidebar{
-    width:260px;
-    background:rgba(255,255,255,.05);
-    backdrop-filter:blur(18px);
-    border-right:1px solid rgba(255,255,255,.08);
-    padding:30px;
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    width:270px;
+
+    height:100vh;
+
+
+    background:
+
+    rgba(255,255,255,.05);
+
+
+    backdrop-filter:blur(25px);
+
+
+    border-right:
+
+    1px solid rgba(255,255,255,.1);
+
+
+    padding:30px 20px;
+
+
 }
 
+
+
+
+
 .logo{
-    font-size:28px;
-    font-weight:700;
-    margin-bottom:40px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+
+    font-size:24px;
+
+    margin-bottom:50px;
+
+
 }
+
+
+
+.logo i{
+
+    font-size:35px;
+
+    color:#3b82f6;
+
+
+    filter:
+
+    drop-shadow(
+
+    0 0 15px #3b82f6
+
+    );
+
+
+}
+
+
+
+
 
 .sidebar ul{
+
     list-style:none;
+
 }
+
+
 
 .sidebar li{
+
+
     display:flex;
+
+
     align-items:center;
+
+
     gap:15px;
-    padding:15px;
-    border-radius:14px;
+
+
+    padding:16px;
+
+
+    margin-bottom:12px;
+
+
+    border-radius:15px;
+
+
+    color:#a8b3cf;
+
+
     cursor:pointer;
+
+
     transition:.3s;
-    margin-bottom:10px;
+
+
 }
+
+
+
+.sidebar li i{
+
+    width:25px;
+
+    font-size:18px;
+
+}
+
+
 
 .sidebar li:hover{
-    background:#3b82f6;
+
+
+    background:
+
+    rgba(255,255,255,.1);
+
+
+    color:white;
+
+
+    transform:translateX(8px);
+
+
 }
+
+
 
 .sidebar li.active{
-    background:#2563eb;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+
+    color:white;
+
+
+    box-shadow:
+
+    0 10px 30px
+
+    rgba(37,99,235,.4);
+
+
 }
 
-.sidebar i{
-    width:25px;
-}
 
-/* Main */
 
-.main{
-    flex:1;
+/* ==========================
+   MAIN CONTENT
+========================== */
+
+
+.content{
+
+
+    margin-left:270px;
+
+
     padding:40px;
-    overflow:auto;
+
+
 }
 
-/* Header */
+
+
+
+/* ==========================
+   HEADER
+========================== */
+
 
 header{
+
+
     display:flex;
+
+
     justify-content:space-between;
+
+
     align-items:center;
-    margin-bottom:35px;
+
+
+    margin-bottom:40px;
+
+
 }
+
+
 
 header h1{
-    font-size:34px;
+
+
+    font-size:36px;
+
+
 }
+
+
 
 header p{
+
+
     color:#94a3b8;
-    margin-top:5px;
+
+
+    margin-top:8px;
+
+
 }
 
-.profile img{
+
+
+
+
+.header-right{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:20px;
+
+
+}
+
+
+
+.header-right img{
+
+
     width:55px;
+
+
     height:55px;
+
+
     border-radius:50%;
+
+
     border:3px solid #3b82f6;
+
+
 }
 
-/* Cards */
 
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
-    margin-bottom:40px;
+
+.connection{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:10px;
+
+
+    padding:12px 20px;
+
+
+    border-radius:30px;
+
+
+    background:
+
+    rgba(255,255,255,.06);
+
+
 }
 
-.card{
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(15px);
-    border-radius:22px;
-    padding:25px;
-    transition:.3s;
-}
 
-.card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 15px 40px rgba(37,99,235,.35);
-}
 
-.card h3{
-    color:#94a3b8;
-    margin-bottom:15px;
-}
+.connection span{
 
-.card h2{
-    font-size:30px;
-}
 
-.progress{
-    margin-top:20px;
-    width:100%;
-    height:10px;
-    background:#1e293b;
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.bar{
-    height:100%;
-    background:#3b82f6;
-    border-radius:20px;
-}
-
-/* Sections */
-
-section{
-    margin-bottom:40px;
-}
-
-section h2{
-    margin-bottom:20px;
-    font-size:26px;
-}
-
-/* Remote */
-
-.remote-grid{
-    display:grid;
-    grid-template-columns:repeat(3,90px);
-    gap:18px;
-    justify-content:center;
-}
-
-.remote-grid button{
-    height:70px;
-    border:none;
-    border-radius:18px;
-    background:#1e293b;
-    color:white;
-    font-size:18px;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.remote-grid button:hover{
-    background:#2563eb;
-    transform:scale(1.05);
-}
-
-/* Apps */
-
-.app-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-    gap:20px;
-}
-
-.app{
-    background:rgba(255,255,255,.05);
-    border-radius:20px;
-    padding:30px;
-    text-align:center;
-    transition:.3s;
-    cursor:pointer;
-}
-
-.app:hover{
-    background:#2563eb;
-    transform:translateY(-8px);
-}
-
-.app i{
-    font-size:40px;
-    margin-bottom:15px;
-}
-
-.app p{
-    font-weight:600;
-}
-
-/* Macro's */
-
-.macro-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
-}
-
-.macro{
-    background:linear-gradient(135deg,#2563eb,#7c3aed);
-    padding:35px;
-    border-radius:22px;
-    text-align:center;
-    font-size:24px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.macro:hover{
-    transform:scale(1.05);
-    box-shadow:0 20px 40px rgba(124,58,237,.4);
-}
-
-/* Scrollbar */
-
-::-webkit-scrollbar{
     width:10px;
+
+
+    height:10px;
+
+
+    background:#22c55e;
+
+
+    border-radius:50%;
+
+
+    box-shadow:
+
+    0 0 15px #22c55e;
+
+
 }
 
-::-webkit-scrollbar-thumb{
-    background:#3b82f6;
-    border-radius:20px;
-}
-
-::-webkit-scrollbar-track{
-    background:#0f172a;
-}
-
-/* ======================================
+/* ==========================================
    TVControl Pro
    style.css - Deel 2
-====================================== */
+   Dashboard Cards
+========================================== */
 
-/* Achtergrond */
 
-body::before{
-    content:"";
-    position:fixed;
-    width:700px;
-    height:700px;
-    background:#2563eb;
-    border-radius:50%;
-    filter:blur(180px);
-    opacity:.18;
-    top:-250px;
-    right:-200px;
-    z-index:-2;
+/* ==========================
+   DASHBOARD GRID
+========================== */
+
+
+.dashboard{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(auto-fit,minmax(250px,1fr));
+
+    gap:25px;
+
+    margin-bottom:50px;
+
 }
 
-body::after{
-    content:"";
-    position:fixed;
-    width:600px;
-    height:600px;
-    background:#7c3aed;
-    border-radius:50%;
-    filter:blur(180px);
-    opacity:.18;
-    bottom:-250px;
-    left:-150px;
-    z-index:-2;
-}
 
-/* Glass Effect */
 
-.card,
-.app,
-.macro,
-.sidebar{
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.35),
-        inset 0 1px rgba(255,255,255,.08);
-}
 
-/* Hover */
 
-.card:hover,
-.app:hover,
-.macro:hover{
+/* ==========================
+   GLASS CARDS
+========================== */
+
+
+.card{
+
+
+    background:
+
+    rgba(255,255,255,.06);
+
+
+    backdrop-filter:
+
+    blur(20px);
+
+
+    border:
+
+    1px solid
+
+    rgba(255,255,255,.1);
+
+
+    border-radius:25px;
+
+
+    padding:30px;
+
+
+    position:relative;
+
+
+    overflow:hidden;
+
+
     transition:.35s;
-}
 
-/* Knoppen */
-
-button{
-    font-family:'Poppins',sans-serif;
-}
-
-button:active{
-    transform:scale(.95);
-}
-
-/* Animaties */
-
-@keyframes fadeUp{
-
-    from{
-
-        opacity:0;
-        transform:translateY(40px);
-
-    }
-
-    to{
-
-        opacity:1;
-        transform:translateY(0);
-
-    }
 
 }
 
-.cards{
-    animation:fadeUp .8s ease;
+
+
+.card::before{
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    width:150px;
+
+
+    height:150px;
+
+
+    background:
+
+    rgba(59,130,246,.25);
+
+
+    filter:blur(50px);
+
+
+    right:-50px;
+
+
+    top:-50px;
+
+
 }
 
-.remote{
-    animation:fadeUp 1s ease;
-}
 
-.apps{
-    animation:fadeUp 1.2s ease;
-}
 
-.macros{
-    animation:fadeUp 1.4s ease;
-}
+.card:hover{
 
-/* Glow */
 
-.logo{
+    transform:
 
-    text-shadow:
-    0 0 10px #3b82f6,
-    0 0 20px #3b82f6;
+    translateY(-8px);
+
+
+    box-shadow:
+
+
+    0 20px 50px
+
+    rgba(0,0,0,.35);
+
 
 }
+
+
+
+
+
+.card h3{
+
+
+    color:#94a3b8;
+
+
+    font-size:15px;
+
+
+    margin-bottom:15px;
+
+
+}
+
+
+
 
 .card h2{
 
-    color:white;
+
+    font-size:30px;
+
+
+    margin-bottom:10px;
+
 
 }
 
-.card:hover h2{
+
+
+.card p{
+
+
+    color:#94a3b8;
+
+
+}
+
+
+
+
+
+/* ==========================
+   VOLUME BAR
+========================== */
+
+
+.progress{
+
+
+    width:100%;
+
+
+    height:12px;
+
+
+    background:
+
+    rgba(255,255,255,.1);
+
+
+    border-radius:20px;
+
+
+    overflow:hidden;
+
+
+    margin-top:20px;
+
+
+}
+
+
+
+#volumeBar{
+
+
+    height:100%;
+
+
+    width:0%;
+
+
+    background:
+
+
+    linear-gradient(
+
+    90deg,
+
+    #2563eb,
+
+    #a855f7
+
+    );
+
+
+    border-radius:20px;
+
+
+}
+
+
+
+
+
+/* ==========================
+   SECTION TITLES
+========================== */
+
+
+.section-title{
+
+
+    margin-bottom:25px;
+
+
+}
+
+
+
+.section-title h2{
+
+
+    font-size:28px;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:12px;
+
+
+}
+
+
+
+.section-title p{
+
+
+    color:#94a3b8;
+
+
+    margin-top:5px;
+
+
+}
+
+
+
+
+/* ==========================
+   AMBILIGHT PANEL
+========================== */
+
+
+.ambilight-card{
+
+
+    background:
+
+    rgba(255,255,255,.05);
+
+
+    backdrop-filter:
+
+    blur(25px);
+
+
+    border:
+
+    1px solid
+
+    rgba(255,255,255,.1);
+
+
+    border-radius:30px;
+
+
+    padding:35px;
+
+
+}
+
+
+
+
+
+.ambi-status{
+
+
+    display:flex;
+
+
+    justify-content:space-between;
+
+
+    align-items:center;
+
+
+    margin-bottom:35px;
+
+
+}
+
+
+
+
+.ambi-status h3{
+
+
+    color:#94a3b8;
+
+
+}
+
+
+
+.toggle-btn{
+
+
+    padding:14px 25px;
+
+
+    border:none;
+
+
+    border-radius:30px;
+
+
+    cursor:pointer;
+
+
+    color:white;
+
+
+    background:
+
+
+    linear-gradient(
+
+    135deg,
+
+    #2563eb,
+
+    #7c3aed
+
+    );
+
+
+    font-weight:600;
+
+
+}
+
+
+
+.ambi-controls{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(auto-fit,minmax(250px,1fr));
+
+
+    gap:25px;
+
+
+}
+
+
+
+.control-box{
+
+
+    background:
+
+    rgba(255,255,255,.05);
+
+
+    padding:25px;
+
+
+    border-radius:20px;
+
+
+}
+
+
+
+
+.control-box h3{
+
+
+    margin-bottom:20px;
+
+
+}
+
+
+
+
+
+/* Range slider */
+
+
+input[type="range"]{
+
+
+    width:100%;
+
+
+    accent-color:#7c3aed;
+
+
+}
+
+
+
+
+#brightnessValue{
+
+
+    display:block;
+
+
+    margin-top:10px;
+
+
+    color:#a855f7;
+
+
+    font-weight:600;
+
+
+}
+
+
+
+
+
+/* ==========================
+   AMBILIGHT MODES
+========================== */
+
+
+.mode-buttons{
+
+
+    display:flex;
+
+
+    flex-wrap:wrap;
+
+
+    gap:12px;
+
+
+}
+
+
+
+.mode-buttons button{
+
+
+    border:none;
+
+
+    padding:12px 18px;
+
+
+    border-radius:20px;
+
+
+    cursor:pointer;
+
+
+    color:white;
+
+
+    background:
+
+    rgba(255,255,255,.1);
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.mode-buttons button:hover{
+
+
+    background:#2563eb;
+
+
+}
+
+
+
+
+
+/* ==========================
+   COLOR PICKER
+========================== */
+
+
+.color-picker{
+
+
+    display:flex;
+
+
+    gap:15px;
+
+
+}
+
+
+
+.color-picker button{
+
+
+    width:35px;
+
+
+    height:35px;
+
+
+    border-radius:50%;
+
+
+    border:none;
+
+
+    cursor:pointer;
+
+
+}
+
+
+
+.color-picker button:nth-child(1){
+
+background:red;
+
+}
+
+
+.color-picker button:nth-child(2){
+
+background:lime;
+
+}
+
+
+.color-picker button:nth-child(3){
+
+background:blue;
+
+}
+
+
+.color-picker button:nth-child(4){
+
+background:white;
+
+}
+
+
+.color-picker button:nth-child(5){
+
+background:magenta;
+
+}
+
+/* ==========================================
+   TVControl Pro
+   style.css - Deel 3
+   Remote / Apps / Favorites / Macros
+========================================== */
+
+
+/* ==========================
+   REMOTE PANEL
+========================== */
+
+
+.remote-panel{
+
+    margin-top:40px;
+
+}
+
+
+
+.remote{
+
+
+    background:
+
+    rgba(255,255,255,.05);
+
+
+    backdrop-filter:
+
+    blur(25px);
+
+
+    border:
+
+    1px solid
+
+    rgba(255,255,255,.1);
+
+
+    border-radius:35px;
+
+
+    padding:40px;
+
+
+    max-width:600px;
+
+
+    margin:auto;
+
+
+    text-align:center;
+
+
+}
+
+
+
+
+/* Power knop */
+
+
+.power{
+
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    #ef4444,
+
+    #991b1b
+
+    ) !important;
+
+
+    margin-bottom:30px;
+
+
+}
+
+
+
+
+
+.remote-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(3,90px);
+
+
+    justify-content:center;
+
+
+    gap:20px;
+
+
+}
+
+
+
+
+
+.remote-btn{
+
+
+    width:90px;
+
+
+    height:90px;
+
+
+    border-radius:50%;
+
+
+    border:none;
+
+
+    cursor:pointer;
+
+
+    background:
+
+
+    rgba(255,255,255,.08);
+
+
+    color:white;
+
+
+    font-size:22px;
+
+
+    transition:.3s;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+}
+
+
+
+.remote-btn:hover{
+
+
+    background:#2563eb;
+
+
+    transform:scale(1.08);
+
+
+    box-shadow:
+
+
+    0 0 30px
+
+    rgba(37,99,235,.5);
+
+
+}
+
+
+
+
+
+.remote-btn.ok{
+
+
+    background:
+
+
+    linear-gradient(
+
+    135deg,
+
+    #2563eb,
+
+    #7c3aed
+
+    );
+
+
+    font-weight:700;
+
+
+}
+
+
+
+.media-buttons{
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    flex-wrap:wrap;
+
+
+    gap:15px;
+
+
+    margin-top:35px;
+
+
+}
+
+
+
+.media-buttons button{
+
+
+    border:none;
+
+
+    padding:15px 22px;
+
+
+    border-radius:20px;
+
+
+    background:
+
+    rgba(255,255,255,.1);
+
+
+    color:white;
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.media-buttons button:hover{
+
+
+    background:#2563eb;
+
+
+}
+
+
+
+
+
+/* ==========================
+   APPS
+========================== */
+
+
+.apps-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(auto-fit,minmax(160px,1fr));
+
+
+    gap:25px;
+
+
+}
+
+
+
+
+
+.app-card{
+
+
+    height:170px;
+
+
+    background:
+
+
+    rgba(255,255,255,.06);
+
+
+    border:
+
+
+    1px solid
+
+    rgba(255,255,255,.1);
+
+
+    border-radius:30px;
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    justify-content:center;
+
+
+    align-items:center;
+
+
+    cursor:pointer;
+
+
+    transition:.35s;
+
+
+}
+
+
+
+
+.app-card i{
+
+
+    font-size:55px;
+
+
+    margin-bottom:20px;
+
 
     color:#60a5fa;
 
-}
-
-/* Apps */
-
-.app:nth-child(1){
-
-background:#ff000020;
 
 }
 
-.app:nth-child(2){
 
-background:#1db95420;
 
-}
 
-.app:nth-child(3){
 
-background:#e5091420;
+.app-card h3{
 
-}
 
-.app:nth-child(4){
+    font-size:20px;
 
-background:#2563eb20;
 
 }
 
-.app:nth-child(5){
 
-background:#9333ea20;
 
-}
 
-.app:nth-child(6){
 
-background:#16a34a20;
+.app-card:hover{
 
-}
 
-/* Remote */
+    transform:
 
-.remote-grid button{
+    translateY(-10px);
 
-font-weight:600;
 
-box-shadow:
+    background:
 
-0 0 20px rgba(37,99,235,.15);
 
-}
+    rgba(37,99,235,.25);
 
-.remote-grid button:hover{
 
-box-shadow:
+    box-shadow:
 
-0 0 30px rgba(37,99,235,.45);
+
+    0 20px 40px
+
+    rgba(37,99,235,.3);
+
 
 }
 
-/* Macro */
 
-.macro{
 
-overflow:hidden;
-position:relative;
 
-}
 
-.macro::before{
+/* ==========================
+   FAVORITES
+========================== */
 
-content:"";
 
-position:absolute;
+.favorites-grid{
 
-width:300px;
-height:300px;
 
-background:rgba(255,255,255,.08);
+    display:grid;
 
-border-radius:50%;
 
-top:-170px;
-right:-170px;
+    grid-template-columns:
+
+    repeat(auto-fit,minmax(220px,1fr));
+
+
+    gap:25px;
+
 
 }
 
-.macro:hover{
 
-transform:translateY(-10px);
 
-}
+.favorite-card{
 
-/* Header */
 
-header{
+    background:
 
-padding-bottom:20px;
 
-border-bottom:1px solid rgba(255,255,255,.05);
+    linear-gradient(
 
-}
+    135deg,
 
-/* Responsive */
+    rgba(37,99,235,.7),
 
-@media(max-width:1100px){
+    rgba(124,58,237,.7)
 
-.sidebar{
+    );
 
-width:90px;
 
-}
+    border-radius:25px;
 
-.sidebar span{
 
-display:none;
+    padding:35px;
 
-}
 
-.logo{
+    text-align:center;
 
-font-size:18px;
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
 
 }
 
-}
 
-@media(max-width:850px){
 
-body{
+.favorite-card i{
 
-flex-direction:column;
 
-}
+    font-size:40px;
 
-.sidebar{
 
-width:100%;
-display:flex;
-overflow-x:auto;
+    margin-bottom:20px;
+
 
 }
 
-.sidebar ul{
 
-display:flex;
-gap:10px;
 
-}
 
-.main{
+.favorite-card:hover{
 
-padding:20px;
 
-}
+    transform:
 
-.remote-grid{
+    scale(1.05);
 
-grid-template-columns:repeat(3,70px);
 
-}
+    box-shadow:
 
-.remote-grid button{
 
-height:60px;
+    0 20px 50px
+
+    rgba(124,58,237,.4);
+
 
 }
 
-header{
 
-flex-direction:column;
-align-items:flex-start;
-gap:20px;
 
-}
 
-}
 
-@media(max-width:600px){
+/* ==========================
+   MACROS
+========================== */
 
-.cards{
-
-grid-template-columns:1fr;
-
-}
-
-.app-grid{
-
-grid-template-columns:repeat(2,1fr);
-
-}
 
 .macro-grid{
 
-grid-template-columns:1fr;
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(auto-fit,minmax(250px,1fr));
+
+
+    gap:25px;
+
 
 }
 
+
+
+.macro-card{
+
+
+    background:
+
+
+    rgba(255,255,255,.06);
+
+
+    border:
+
+
+    1px solid
+
+    rgba(255,255,255,.1);
+
+
+    border-radius:25px;
+
+
+    padding:30px;
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+
 }
 
-/* Toast */
 
-.toast{
 
-position:fixed;
 
-bottom:30px;
 
-right:30px;
+.macro-card h3{
 
-background:#2563eb;
 
-padding:16px 24px;
+    font-size:24px;
 
-border-radius:14px;
 
-color:white;
+    margin-bottom:15px;
 
-font-weight:600;
-
-opacity:0;
-
-transform:translateY(20px);
-
-transition:.3s;
-
-z-index:9999;
-
-box-shadow:0 10px 30px rgba(0,0,0,.4);
 
 }
 
-.toast.show{
 
-opacity:1;
 
-transform:translateY(0);
+
+
+.macro-card p{
+
+
+    color:#94a3b8;
+
+
+}
+
+
+
+
+.macro-card:hover{
+
+
+    background:
+
+
+    rgba(37,99,235,.25);
+
+
+    transform:
+
+
+    translateY(-8px);
+
+
+}
+
+/* ==========================================
+   TVControl Pro
+   style.css - Deel 4
+   Voice / Settings / Mobile / Finish
+========================================== */
+
+
+/* ==========================
+   VOICE CONTROL
+========================== */
+
+
+.voice-card{
+
+    background:
+
+    rgba(255,255,255,.06);
+
+
+    backdrop-filter:
+
+    blur(25px);
+
+
+    border:
+
+    1px solid
+
+    rgba(255,255,255,.1);
+
+
+    border-radius:30px;
+
+
+    padding:40px;
+
+
+    text-align:center;
+
+
+}
+
+
+
+#voiceButton{
+
+
+    width:120px;
+
+
+    height:120px;
+
+
+    border-radius:50%;
+
+
+    border:none;
+
+
+    cursor:pointer;
+
+
+    font-size:45px;
+
+
+    color:white;
+
+
+    background:
+
+
+    linear-gradient(
+
+    135deg,
+
+    #2563eb,
+
+    #7c3aed
+
+    );
+
+
+    transition:.3s;
+
+
+    box-shadow:
+
+
+    0 0 40px
+
+    rgba(124,58,237,.5);
+
+
+}
+
+
+
+#voiceButton:hover{
+
+
+    transform:
+
+    scale(1.1);
+
+
+}
+
+
+
+#voiceText{
+
+
+    margin-top:25px;
+
+
+    color:#cbd5e1;
+
+
+}
+
+
+
+.voice-history{
+
+
+    margin-top:30px;
+
+
+    padding:20px;
+
+
+    border-radius:20px;
+
+
+    background:
+
+    rgba(0,0,0,.2);
+
+
+    color:#94a3b8;
+
+
+}
+
+
+
+
+
+/* ==========================
+   KEYBOARD
+========================== */
+
+
+.keyboard-card{
+
+
+    display:flex;
+
+
+    gap:15px;
+
+
+    background:
+
+
+    rgba(255,255,255,.06);
+
+
+    padding:30px;
+
+
+    border-radius:25px;
+
+
+}
+
+
+
+#tvKeyboard{
+
+
+    flex:1;
+
+
+    padding:18px;
+
+
+    border:none;
+
+
+    outline:none;
+
+
+    border-radius:15px;
+
+
+    background:
+
+    rgba(255,255,255,.1);
+
+
+    color:white;
+
+
+    font-size:18px;
+
+
+}
+
+
+
+#sendKeyboard{
+
+
+    border:none;
+
+
+    padding:18px 30px;
+
+
+    border-radius:15px;
+
+
+    cursor:pointer;
+
+
+    color:white;
+
+
+    background:#2563eb;
+
+
+    font-weight:600;
+
+
+}
+
+
+
+
+
+/* ==========================
+   SETTINGS
+========================== */
+
+
+.settings-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(auto-fit,minmax(250px,1fr));
+
+
+    gap:25px;
+
+
+}
+
+
+
+
+
+.setting-card{
+
+
+    background:
+
+
+    rgba(255,255,255,.06);
+
+
+    backdrop-filter:
+
+    blur(20px);
+
+
+    border-radius:25px;
+
+
+    padding:30px;
+
+
+    border:
+
+    1px solid
+
+    rgba(255,255,255,.1);
+
+
+}
+
+
+
+
+.setting-card h3{
+
+
+    margin-bottom:20px;
+
+
+}
+
+
+
+.setting-card button{
+
+
+    margin-top:20px;
+
+
+    border:none;
+
+
+    padding:14px 25px;
+
+
+    border-radius:20px;
+
+
+    color:white;
+
+
+    background:
+
+
+    linear-gradient(
+
+    135deg,
+
+    #2563eb,
+
+    #7c3aed
+
+    );
+
+
+    cursor:pointer;
+
+
+}
+
+
+
+
+
+/* ==========================
+   NOTIFICATION
+========================== */
+
+
+.notification{
+
+
+    position:fixed;
+
+
+    bottom:30px;
+
+
+    right:30px;
+
+
+    padding:18px 30px;
+
+
+    border-radius:20px;
+
+
+    background:
+
+
+    rgba(37,99,235,.9);
+
+
+    color:white;
+
+
+    opacity:0;
+
+
+    transform:
+
+    translateY(30px);
+
+
+    transition:.3s;
+
+
+    pointer-events:none;
+
+
+    box-shadow:
+
+
+    0 20px 40px
+
+    rgba(0,0,0,.4);
+
+
+}
+
+
+
+.notification.show{
+
+
+    opacity:1;
+
+
+    transform:
+
+    translateY(0);
+
+
+}
+
+
+
+
+
+/* ==========================
+   FOOTER
+========================== */
+
+
+footer{
+
+
+    margin-top:50px;
+
+
+    padding:30px;
+
+
+    text-align:center;
+
+
+    color:#64748b;
+
+
+    border-top:
+
+
+    1px solid
+
+    rgba(255,255,255,.08);
+
+
+}
+
+
+
+
+
+/* ==========================
+   MOBILE
+========================== */
+
+
+@media(max-width:900px){
+
+
+.sidebar{
+
+
+    width:80px;
+
+
+    padding:20px 10px;
+
+
+}
+
+
+
+.logo h2{
+
+
+    display:none;
+
+
+}
+
+
+
+.sidebar li span{
+
+
+    display:none;
+
+
+}
+
+
+
+.content{
+
+
+    margin-left:80px;
+
+
+    padding:20px;
+
+
+}
+
+
+
+header{
+
+
+    flex-direction:column;
+
+
+    align-items:flex-start;
+
+
+    gap:20px;
+
+
+}
+
+
+
+}
+
+
+
+@media(max-width:600px){
+
+
+.content{
+
+
+    margin-left:0;
+
+
+}
+
+
+
+.sidebar{
+
+
+    position:relative;
+
+
+    width:100%;
+
+
+    height:auto;
+
+
+}
+
+
+
+.sidebar ul{
+
+
+    display:flex;
+
+
+    overflow-x:auto;
+
+
+}
+
+
+
+.sidebar li{
+
+
+    min-width:60px;
+
+
+}
+
+
+
+.dashboard{
+
+
+    grid-template-columns:1fr;
+
+
+}
+
+
+
+.remote-grid{
+
+
+    grid-template-columns:
+
+    repeat(3,70px);
+
+
+}
+
+
+
+.remote-btn{
+
+
+    width:70px;
+
+
+    height:70px;
+
+
+}
+
+
+
+.keyboard-card{
+
+
+    flex-direction:column;
+
+
+}
+
+
 
 }
