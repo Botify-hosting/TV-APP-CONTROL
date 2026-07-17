@@ -566,3 +566,42 @@ grid-template-columns:1fr;
 
 }
 
+/* Toast */
+
+.toast{
+
+position:fixed;
+
+bottom:30px;
+
+right:30px;
+
+background:#2563eb;
+
+padding:16px 24px;
+
+border-radius:14px;
+
+color:white;
+
+font-weight:600;
+
+opacity:0;
+
+transform:translateY(20px);
+
+transition:.3s;
+
+z-index:9999;
+
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+
+}
+
+.toast.show{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
